@@ -1,7 +1,3 @@
-// Clock stub file
-
-// To use the right term, this is the package *clause*.
-// You can document general stuff about the package here if you like.
 package clock
 
 import (
@@ -9,34 +5,26 @@ import (
 	"math"
 )
 
-// The value of testVersion here must match `targetTestVersion` in the file
-// clock_test.go.
 const testVersion = 4
 
-// Clock API as stub definitions.  No, it doesn't compile yet.
-// More details and hints are in clock_test.go.
-
 type Clock struct {
-	Hour   int
-	Minute int
+	hour   int
+	minute int
 }
 
-func New(hour int, minute int) *Clock {
-	var c = Clock{0, 0}
-	c.Hour = hour
-	c.Minute = minute
-	return &c
+func New(hour int, minute int) Clock {
+	h, m := getAdjustedMinuteAndReturnAccumulatedHour(minute)
+	h = getAdjustedHour(h + hour)
+	return Clock{h, m}
 }
 
 func (clock Clock) String() string {
-	hour, minute := getAdjustedMinuteAndReturnAccumulatedHour(clock.Minute)
-	hour = getAdjustedHour(clock.Hour + hour)
-	return fmt.Sprintf("%02d:%02d", hour, minute)
+	return fmt.Sprintf("%02d:%02d", clock.hour, clock.minute)
 }
 
-func (clock *Clock) Add(minutes int) Clock {
-	clock.Minute += clock.Minute + minutes
-	return *clock
+func (clock Clock) Add(minutes int) Clock {
+
+	return New(clock.hour, clock.minute+minutes)
 }
 
 func getAdjustedHour(num int) int {
@@ -66,7 +54,7 @@ func getAdjustedMinuteAndReturnAccumulatedHour(num int) (int, int) {
 
 	case num < 0:
 		minute = 60 - int(math.Mod(math.Abs(float64(num)), 60))
-		hour = getAdjustedHour(num / 60)
+		hour = getAdjustedHour(num/60) - 1
 	}
 	return hour, minute
 }
