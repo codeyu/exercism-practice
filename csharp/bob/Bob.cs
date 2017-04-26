@@ -8,28 +8,12 @@ public static class Bob
         var yell = "Whoa, chill out!";
         var ignore = "Fine. Be that way!";
         var other = "Whatever.";
-        bool isYell(string str)
-        {
-            var hasUpper = false;
-            foreach(var c in str)
-            {
-                if(Char.IsLetter(c))
-                {
-                    if(Char.IsUpper(c))
-                    {
-                        hasUpper = true;
-                        continue;
-                    }
-                    return false;
-                }
-            }
-            return hasUpper;
-        }
+        
         if(string.IsNullOrWhiteSpace(statement))
         {
             return ignore;
         }
-        else if(isYell(statement))
+        else if(IsYell(statement) && hasLetter(statement))
         {
             return yell;
         }
@@ -39,4 +23,7 @@ public static class Bob
         }
         return other;
     }
+
+    private static bool IsYell(string str) => str.Where(x=>Char.IsLetter(x)).All(x=>Char.IsUpper(x));
+    private static bool hasLetter(string str) => str.Any(x=>Char.IsLetter(x));
 }
