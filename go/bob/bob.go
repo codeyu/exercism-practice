@@ -7,7 +7,8 @@ import (
 
 const testVersion = 3
 
-func Hay(input string) string {
+func Hey(input string) string {
+	input = strings.TrimSpace(input)
 	isAllUpper := false
 	for _, ch := range input {
 		if unicode.IsLetter(ch) {
@@ -22,9 +23,9 @@ func Hay(input string) string {
 	}
 	if isAllUpper {
 		return "Whoa, chill out!"
-	} else if input[len(input)-1] == '?' {
+	} else if strings.HasSuffix(input, "?") {
 		return "Sure."
-	} else if len(strings.TrimSpace(input)) == 0 {
+	} else if input == "" {
 		return "Fine. Be that way!"
 	} else {
 		return "Whatever."
