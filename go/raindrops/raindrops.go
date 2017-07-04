@@ -1,23 +1,22 @@
 package raindrops
+
 import "strconv"
+
 const testVersion = 3
 
-func Convert(in int) string{
+func Convert(in int) string {
 	var str = ""
-	var has_factor = false
-	if in % 3 == 0{
-		has_factor = true
+	if in%3 == 0 {
+
 		str += "Pling"
 	}
-	if in % 5 ==0{
-		has_factor = true
+	if in%5 == 0 {
 		str += "Plang"
 	}
-	if in % 7 == 0{
-		has_factor = true
+	if in%7 == 0 {
 		str += "Plong"
 	}
-	if has_factor{
+	if str != "" {
 		return str
 	}
 	return strconv.Itoa(in)
